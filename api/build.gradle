@@ -30,6 +30,7 @@ dependencies {
     compile 'org.apache.httpcomponents:httpmime:4.5.2'
     compile 'org.json:json:20160810'
     compile 'com.google.code.gson:gson:2.7'
+    compile 'com.googlecode.objectify:objectify:5.0.3'
 }
 
 appengine {
@@ -42,3 +43,4 @@ appengine {
         getDiscoveryDocsOnBuild = true
     }
 }
+
