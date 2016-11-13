@@ -6,6 +6,7 @@ package com.appspot.mycookooapp.api;
 
 public class SuggestedRecipe {
 
+
     private boolean vegetarian;
     private boolean vegan;
     private boolean glutenFree;
@@ -22,6 +23,9 @@ public class SuggestedRecipe {
     public SuggestedRecipe() {
     }
 
+    public SuggestedRecipe(double id) {
+        this.id = id;
+    }
     public SuggestedRecipe(boolean vegetarian, boolean vegan, boolean glutenFree, boolean dairyFree, double id, String title, int readyInMinutes, String image, String imageType, int usedIngredientCount, int missedIngredientCount, int calories) {
         this.vegetarian = vegetarian;
         this.vegan = vegan;
