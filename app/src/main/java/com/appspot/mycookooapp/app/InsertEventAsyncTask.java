@@ -2,7 +2,6 @@ package com.appspot.mycookooapp.app;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.widget.Toast;
 
 import com.appspot.mycookooapp.api.eventEndpoint.EventEndpoint;
 import com.appspot.mycookooapp.api.eventEndpoint.model.Event;
@@ -12,28 +11,27 @@ import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
 import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Created by Tuti on 04.01.17.
  */
 
-public class RefreshAsyncTask extends AsyncTask<Void, Void, List<Event>> {
+public class InsertEventAsyncTask extends AsyncTask<Object, Object, Void> {
 
     private static EventEndpoint myApiService = null;
     private Context context;
+    private Event event_sending;
 
     //private CookooMainApplication cka;
 
-    RefreshAsyncTask(Context context) {
+    InsertEventAsyncTask(Context context, Event event) {
         this.context = context;
-        System.out.println("Stupid context");
+        event_sending = event;
 
     }
 
     @Override
-    protected List<Event> doInBackground(Void... params) {
+    protected Void doInBackground(Object... params) {
         if (myApiService == null) {  // Only do this once
             EventEndpoint.Builder builder = new EventEndpoint.Builder(AndroidHttp.newCompatibleTransport(),
                     new AndroidJsonFactory(), null)
@@ -53,30 +51,13 @@ public class RefreshAsyncTask extends AsyncTask<Void, Void, List<Event>> {
         }
 
         try {
-            return myApiService.listEvents().execute().getItems();
+            myApiService.insertEvent(event_sending).execute();
+
         } catch (IOException e) {
-            return Collections.EMPTY_LIST;
+
         }
+        return null;
     }
 
 
-        @Override
-        protected void onPostExecute(List<Event> result) {
-
-            //((CookooMainApplication) this.getApplication()).setGlobalEventList(result);
-        //cka = ((CookooMainApplication)context);
-          //  cka.setGlobalEventList(result);
-            ((CookooMainApplication)((MainActivity) context).getApplication()).setGlobalEventList(result);
-        /*
-            for (Event q : result) {
-                Toast.makeText(context, q.getHostid() + " : " + q.getTitle(), Toast.LENGTH_LONG).show();
-            }
-
-            */
-
-
-        }
-
-
 }
-
