@@ -56,7 +56,7 @@ public class RefreshAsyncTask extends AsyncTask<Void, Void, List<Event>> {
             Event myevent = new Event();
             myevent.setId((long) 2);
             myevent.setHostid("ugur");
-            myevent.setTitle("myevent");
+            myevent.setTitle("myevent ");
             // myApiService.insertEvent(myevent).execute();
             return myApiService.listEvents().execute().getItems();
         } catch (IOException e) {
