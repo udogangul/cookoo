@@ -15,17 +15,26 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
-class EndpointsAsyncTask extends AsyncTask<Void, Void, List<Event>> {
+/**
+ * Created by Tuti on 04.01.17.
+ */
+
+public class RefreshAsyncTask extends AsyncTask<Void, Void, List<Event>> {
+
     private static EventEndpoint myApiService = null;
     private Context context;
 
-    EndpointsAsyncTask(Context context) {
+    //private CookooMainApplication cka;
+
+    RefreshAsyncTask(Context context) {
         this.context = context;
+        System.out.println("Stupid context");
+
     }
 
     @Override
     protected List<Event> doInBackground(Void... params) {
-        if(myApiService == null) {  // Only do this once
+        if (myApiService == null) {  // Only do this once
             EventEndpoint.Builder builder = new EventEndpoint.Builder(AndroidHttp.newCompatibleTransport(),
                     new AndroidJsonFactory(), null)
                     // options for running against local devappserver
@@ -48,17 +57,31 @@ class EndpointsAsyncTask extends AsyncTask<Void, Void, List<Event>> {
             myevent.setId((long) 2);
             myevent.setHostid("ugur");
             myevent.setTitle("myevent");
-           // myApiService.insertEvent(myevent).execute();
+            // myApiService.insertEvent(myevent).execute();
             return myApiService.listEvents().execute().getItems();
         } catch (IOException e) {
             return Collections.EMPTY_LIST;
         }
     }
 
-    @Override
-    protected void onPostExecute(List<Event> result) {
-        for (Event q : result) {
-            Toast.makeText(context, q.getHostid() + " : " + q.getTitle(), Toast.LENGTH_LONG).show();
+
+        @Override
+        protected void onPostExecute(List<Event> result) {
+
+            //((CookooMainApplication) this.getApplication()).setGlobalEventList(result);
+        //cka = ((CookooMainApplication)context);
+          //  cka.setGlobalEventList(result);
+            ((CookooMainApplication)((MainActivity) context).getApplication()).setGlobalEventList(result);
+        /*
+            for (Event q : result) {
+                Toast.makeText(context, q.getHostid() + " : " + q.getTitle(), Toast.LENGTH_LONG).show();
+            }
+
+            */
+
+
         }
-    }
+
+
 }
+
