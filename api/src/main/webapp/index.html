@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Home</title>
+    <title>Hello, Endpoints!</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <link rel="stylesheet"
           href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
@@ -12,7 +12,7 @@
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">Home screen</a>
+            <a class="navbar-brand" href="#">Hello, Endpoints!</a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
@@ -50,19 +50,47 @@
     <div class="jumbotron">
         <div class="row">
             <div class="col-lg-12">
-                <h1>Search by Ingredient</h1>
-                <p>Enter a list of ingredients separated by comma to search for your recipes</p>
+                <h1>Hello, Endpoints!</h1>
+                <p>Enter your name and press the button below to call your Google Cloud Endpoints
+                    API.</p>
                 <form>
                     <div class="input-group">
-                        <input type="text" class="form-control input-lg" placeholder="Name"
-                               id="nameInput"/>
-                          <span class="input-group-btn">
+                        <input type="text" class="form-control input-lg" placeholder="id"
+                               id="idInput"/>
+                        <input type="text" class="form-control input-lg" placeholder="Diet"
+                               id="dietInput"/>
+                        <input type="text" class="form-control input-lg" placeholder="Included Ingredients"
+                               id="ingredientsInput"/>
+                        <input type="text" class="form-control input-lg" placeholder="Excluded Ingredients"
+                               id="excludedIngredientsInput"/>
+                        <input type="text" class="form-control input-lg" placeholder="Intolerances"
+                               id="intolerancesInput"/>
+                        <input type="text" class="form-control input-lg" placeholder="Type of Meal"
+                               id="queryInput"/>
+
+                    </div>
+                    <div class="input-group-btn">
                              <button class="btn btn-default btn-primary btn-group btn-lg"
-                                     type="submit" id="helloButton">Search &raquo;</button>
-                          </span>
+                                     type="submit" id="helloButton">Say "Hello" &raquo;</button>
                     </div>
                 </form>
                 <br/>
+                <p>If you need step-by-step instructions for connecting your Android application to
+                    this backend module, see <a
+                            href="https://github.com/GoogleCloudPlatform/gradle-appengine-templates/tree/master/HelloEndpoints">"App
+                        Engine Java Endpoints Module" template documentation</a>.</p>
+                <p>
+                    <small>
+                        For more information about Google App Engine for Java, check out the <a
+                            href="https://developers.google.com/appengine/docs/java/">App Engine
+                        documentation</a>.<br/>
+                        To learn more about Google Cloud Endpoints, see <a
+                            href="https://developers.google.com/appengine/docs/java/endpoints/">Cloud
+                        Endpoints documentation</a>.<br/>
+                        If you'd like to access your generated Google Cloud Endpoints APIs directly,
+                        see the <a href="/_ah/api/explorer">Cloud Endpoints API Explorer</a>.
+                    </small>
+                </p>
             </div>
         </div>
     </div>
@@ -73,7 +101,8 @@
     function enableClick() {
       document.getElementById('helloButton').onclick = function() {
         var name = document.getElementById('nameInput').value;
-        gapi.client.myApi.sayHi({'name': name}).execute(
+        var surname = document.getElementById('surnameInput').value;
+        gapi.client.myApi.sayHi({'name': name+surname}).execute(
           function(response) {
             var outputAlertDiv = document.getElementById('outputAlert');
             outputAlertDiv.style.visibility = 'visible';
