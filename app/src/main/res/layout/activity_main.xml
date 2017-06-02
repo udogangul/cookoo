@@ -10,30 +10,24 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.appspot.mycookooapp.app.MainActivity">
 
-    <TextView
+    <Button
+        android:text="New Event"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:text="Hello Event Endpoint"
-        android:id="@+id/textView" />
+        android:id="@+id/btnNewEvent"
+        android:onClick="onClickNewEvent"
+     />
 
     <Button
-        android:layout_height="wrap_content"
+        android:text="Show Events"
         android:layout_width="wrap_content"
-        android:text="Get Events"
-        android:id="@+id/btnGetEvents"
-        android:layout_below="@id/textView"
-        android:onClick="getEvents"
-    />
+        android:layout_height="wrap_content"
+        android:id="@+id/btnShowEvents"
+        android:onClick="onClickShowEvents"
 
-    <Button
-        android:text="Next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView"
-        android:layout_toEndOf="@+id/textView"
-        android:layout_marginStart="63dp"
-        android:layout_marginTop="13dp"
-        android:id="@+id/bu_next"
-        android:onClick="onClickNext"/>
+        android:layout_below="@+id/btnNewEvent"
+        android:layout_alignStart="@+id/btnNewEvent"
+        android:layout_alignEnd="@+id/btnNewEvent" />
+
 
 </RelativeLayout>

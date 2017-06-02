@@ -1,6 +1,8 @@
 package com.appspot.mycookooapp.app;
 
 import android.app.Application;
+
+import com.appspot.mycookooapp.api.eventEndpoint.EventEndpoint;
 import com.appspot.mycookooapp.api.eventEndpoint.model.Event;
 
 import java.util.List;
@@ -12,15 +14,15 @@ import java.util.List;
 public class CookooMainApplication extends Application {
 
 
-    private String userName = "Tuti";
-    private int userID = 2;
-    private List<Event> globalEventList = null;
-
+    private String userName;
+    private int userID;
+    private List<Event> globalEventList;
+    int callId = 1;
+    EventEndpoint myApiService = null;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        System.out.println("CookooMain has been started");
     }
 
     public String getUserName(){

@@ -2,7 +2,6 @@ package com.appspot.mycookooapp.app;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.widget.Toast;
 
 import com.appspot.mycookooapp.api.eventEndpoint.EventEndpoint;
 import com.appspot.mycookooapp.api.eventEndpoint.model.Event;
@@ -24,12 +23,8 @@ public class RefreshAsyncTask extends AsyncTask<Void, Void, List<Event>> {
     private static EventEndpoint myApiService = null;
     private Context context;
 
-    //private CookooMainApplication cka;
-
     RefreshAsyncTask(Context context) {
         this.context = context;
-        System.out.println("Stupid context");
-
     }
 
     @Override
@@ -59,24 +54,9 @@ public class RefreshAsyncTask extends AsyncTask<Void, Void, List<Event>> {
         }
     }
 
-
         @Override
         protected void onPostExecute(List<Event> result) {
-
-            //((CookooMainApplication) this.getApplication()).setGlobalEventList(result);
-        //cka = ((CookooMainApplication)context);
-          //  cka.setGlobalEventList(result);
             ((CookooMainApplication)((MainActivity) context).getApplication()).setGlobalEventList(result);
-        /*
-            for (Event q : result) {
-                Toast.makeText(context, q.getHostid() + " : " + q.getTitle(), Toast.LENGTH_LONG).show();
-            }
-
-            */
-
-
         }
-
-
 }
 

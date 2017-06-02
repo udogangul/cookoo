@@ -5,8 +5,11 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <link rel="stylesheet"
           href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+    <link rel='stylesheet' type='text/css' href='css/styles.css'>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src='https://code.jquery.com/jquery-3.1.0.min.js'></script>
+    <script src='js/main.js'></script>
 </head>
 <body role="document" style="padding-top: 70px;">
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -36,113 +39,26 @@
         </div>
     </div>
 </div>
-
-<div class="container theme-showcase" role="main">
-    <!--
-      Output from Endpoints API call.
-    -->
-    <div class="alert alert-success" style="visibility: collapse;" id="outputAlert"></div>
-
-    <!--
-      A form that takes a text value and submits it to the Endpoint,
-      access to the Endpoint is enabled once the client is loaded below.
-    -->
-    <div class="jumbotron">
-        <div class="row">
-            <div class="col-lg-12">
-                <h1>Hello, Endpoints!</h1>
-                <p>Enter your name and press the button below to call your Google Cloud Endpoints
-                    API.</p>
-                <form>
-                    <div class="input-group">
-                        <input type="text" class="form-control input-lg" placeholder="id"
-                               id="idInput"/>
-                        <input type="text" class="form-control input-lg" placeholder="Diet"
-                               id="dietInput"/>
-                        <input type="text" class="form-control input-lg" placeholder="Included Ingredients"
-                               id="ingredientsInput"/>
-                        <input type="text" class="form-control input-lg" placeholder="Excluded Ingredients"
-                               id="excludedIngredientsInput"/>
-                        <input type="text" class="form-control input-lg" placeholder="Intolerances"
-                               id="intolerancesInput"/>
-                        <input type="text" class="form-control input-lg" placeholder="Type of Meal"
-                               id="queryInput"/>
-
-                    </div>
-                    <div class="input-group-btn">
-                             <button class="btn btn-default btn-primary btn-group btn-lg"
-                                     type="submit" id="helloButton">Say "Hello" &raquo;</button>
-                    </div>
-                </form>
-                <br/>
-                <p>If you need step-by-step instructions for connecting your Android application to
-                    this backend module, see <a
-                            href="https://github.com/GoogleCloudPlatform/gradle-appengine-templates/tree/master/HelloEndpoints">"App
-                        Engine Java Endpoints Module" template documentation</a>.</p>
-                <p>
-                    <small>
-                        For more information about Google App Engine for Java, check out the <a
-                            href="https://developers.google.com/appengine/docs/java/">App Engine
-                        documentation</a>.<br/>
-                        To learn more about Google Cloud Endpoints, see <a
-                            href="https://developers.google.com/appengine/docs/java/endpoints/">Cloud
-                        Endpoints documentation</a>.<br/>
-                        If you'd like to access your generated Google Cloud Endpoints APIs directly,
-                        see the <a href="/_ah/api/explorer">Cloud Endpoints API Explorer</a>.
-                    </small>
-                </p>
-            </div>
-        </div>
-    </div>
+<h1>Cooking Events:</h1>
+<div class='events'>
+    <h2>Create an Event </h2>
+    <p>Please input id, title and host:</p>
+    <form>
+        <label for="id">Id</label>
+        <input type="text" id="idInput" name="id">
+        <label for="title">Title</label>
+        <input type="text" id="titleInput" name="title">
+        <label for="host">Host</label>
+        <input type="text" id="hostInput" name="host">
+    </form>
+    <p>
+    <div class='submit-button'>Submit</div>
+    <ul class='result'>
+        <li id="id">default</li>
+        <li id="title">default</li>
+        <li id="host">default</li>
+    </ul>
+    </p>
 </div>
-
-<script type="text/javascript">
-    // A function that attaches a "Say Hello" button click handler
-    function enableClick() {
-      document.getElementById('helloButton').onclick = function() {
-        var name = document.getElementById('nameInput').value;
-        var surname = document.getElementById('surnameInput').value;
-        gapi.client.myApi.sayHi({'name': name+surname}).execute(
-          function(response) {
-            var outputAlertDiv = document.getElementById('outputAlert');
-            outputAlertDiv.style.visibility = 'visible';
-
-            if (!response.error) {
-              outputAlertDiv.className = 'alert alert-success';
-              outputAlertDiv.innerHTML = '<h2>' + response.result.data + '</h2>';
-            }
-            else if (response.error) {
-              outputAlertDiv.className = 'alert alert-danger';
-              outputAlertDiv.innerHTML = '<b>Error Code: </b>' + response.error.code + ' [' + response.error.message + ']';
-            }
-          }
-        );
-        return false;
-      }
-    }
-    // This is called initially
-    function init() {
-      var apiName = 'myApi';
-      var apiVersion = 'v1';
-      var apiRoot = 'https://' + window.location.host + '/_ah/api';
-      if (window.location.hostname == 'localhost'
-          || window.location.hostname == '127.0.0.1'
-          || ((window.location.port != "") && (window.location.port > 1023))) {
-            // We're probably running against the DevAppServer
-            apiRoot = 'http://' + window.location.host + '/_ah/api';
-      }
-      var callback = function() {
-        enableClick();
-      }
-      gapi.client.load(apiName, apiVersion, callback, apiRoot);
-    }
-
-</script>
-<!--
- Load the Google APIs Client Library for JavaScript
- More info here : https://developers.google.com/api-client-library/javascript/reference/referencedocs
--->
-
-<script src="https://apis.google.com/js/client.js?onload=init"></script>
 </body>
 </html>

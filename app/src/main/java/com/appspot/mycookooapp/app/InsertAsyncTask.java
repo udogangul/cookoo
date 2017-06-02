@@ -11,27 +11,24 @@ import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
 import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by Tuti on 04.01.17.
  */
 
-public class InsertEventAsyncTask extends AsyncTask<Object, Object, Void> {
+public class InsertAsyncTask extends AsyncTask<Event, Void, List<Event>> {
+
 
     private static EventEndpoint myApiService = null;
     private Context context;
-    private Event event_sending;
 
-    //private CookooMainApplication cka;
-
-    InsertEventAsyncTask(Context context, Event event) {
-        this.context = context;
-        event_sending = event;
-
-    }
+   // InsertAsyncTask(Context context) {
+   //     this.context = context;
+   // }
 
     @Override
-    protected Void doInBackground(Object... params) {
+    protected List<Event> doInBackground(Event... myEvent) {
         if (myApiService == null) {  // Only do this once
             EventEndpoint.Builder builder = new EventEndpoint.Builder(AndroidHttp.newCompatibleTransport(),
                     new AndroidJsonFactory(), null)
@@ -46,18 +43,27 @@ public class InsertEventAsyncTask extends AsyncTask<Object, Object, Void> {
                         }
                     });
             // end options for devappserver
-
             myApiService = builder.build();
+        }
+        try {
+
+            myApiService.insertEvent(myEvent[0]).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         try {
-            myApiService.insertEvent(event_sending).execute();
-
+            return myApiService.listEvents().execute().getItems();
         } catch (IOException e) {
-
+            e.printStackTrace();
         }
         return null;
     }
 
 
+        @Override
+        protected void onPostExecute(List<Event> result) {
+            ((CookooMainApplication)((MainActivity) context).getApplication()).setGlobalEventList(result);
+        }
 }
+
