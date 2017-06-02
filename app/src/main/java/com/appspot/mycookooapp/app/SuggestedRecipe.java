@@ -6,7 +6,6 @@ package com.appspot.mycookooapp.app;
 
 public class SuggestedRecipe {
 
-
     private boolean vegetarian;
     private boolean vegan;
     private boolean glutenFree;
