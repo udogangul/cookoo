@@ -1,5 +1,6 @@
 package com.appspot.mycookooapp.app;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.EditText;
 import com.appspot.mycookooapp.api.eventEndpoint.model.Event;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by ugurgul on 02.06.17.
@@ -20,39 +22,61 @@ public class NewEventActivity extends AppCompatActivity {
     EditText eventDateText;
     EditText eventIngredientsText;
     Button insertEvent;
+    Event newEvent = new Event();
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newevent);
 
-        List<Event> myEventList = ((CookooMainApplication) this.getApplication()).getGlobalEventList();
+        insertEvent = (Button) findViewById(R.id.btnInsertEvent);
+        eventTitleText = (EditText) findViewById(R.id.eventTitle);
+        eventDateText = (EditText) findViewById(R.id.eventDate);
+        eventIngredientsText = (EditText) findViewById(R.id.eventIngredients);
 
-        long newId=myEventList.size()+1;
+    }
 
-        insertEvent = (Button)findViewById(R.id.btnInsertEvent);
-        eventTitleText = (EditText)findViewById(R.id.eventTitle);
-        eventDateText = (EditText)findViewById(R.id.eventDate);
-        eventIngredientsText = (EditText)findViewById(R.id.eventIngredients);
-        final Event newEvent = new Event();
-
-        newEvent.setId((newId));
+    @Override
+    protected void onStart() {
+        super.onStart();
         newEvent.setHostid("Ugur");
-        newEvent.setDiet("paleo");
-        newEvent.setExcludedIngredients("onion");
-        newEvent.setIntolerances("dairy");
+        newEvent.setDiet("");
+        newEvent.setExcludedIngredients("");
+        newEvent.setIntolerances("");
         newEvent.setLocation("Haidhausen");
+
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        List<Event> myEventList = null;
+        try {
+            myEventList = new RefreshAsyncTask(this).execute().get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        final List<Event> finalMyEventList = myEventList;
         insertEvent.setOnClickListener(
                 new View.OnClickListener()
                 {
                     public void onClick(View view)
                     {
-
-                        newEvent.setTitle(eventTitleText.getText().toString());
-                        newEvent.setTime(eventDateText.getText().toString());
-                        newEvent.setIngredients(eventIngredientsText.getText().toString());
-                        new InsertAsyncTask().execute(newEvent);
+                        if (finalMyEventList==null) {
+                            newEvent.setId((long)1);
+                        }
+                        else {
+                            newEvent.setId(finalMyEventList.get(finalMyEventList.size()-1).getId() + (long) 1);
+                        }
+                    newEvent.setTitle(eventTitleText.getText().toString());
+                    newEvent.setTime(eventDateText.getText().toString());
+                    newEvent.setIngredients(eventIngredientsText.getText().toString());
+                    new InsertAsyncTask(context).execute(newEvent);
+                    insertEvent.setText("Event added");
                     }
                 });
     }
+
     }

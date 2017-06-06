@@ -2,6 +2,7 @@ package com.appspot.mycookooapp.app;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.appspot.mycookooapp.api.eventEndpoint.EventEndpoint;
 import com.appspot.mycookooapp.api.eventEndpoint.model.Event;
@@ -11,6 +12,7 @@ import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
 import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -19,13 +21,12 @@ import java.util.List;
 
 public class InsertAsyncTask extends AsyncTask<Event, Void, List<Event>> {
 
-
     private static EventEndpoint myApiService = null;
     private Context context;
 
-   // InsertAsyncTask(Context context) {
-   //     this.context = context;
-   // }
+    InsertAsyncTask(Context context) {
+        this.context = context;
+    }
 
     @Override
     protected List<Event> doInBackground(Event... myEvent) {
@@ -46,24 +47,18 @@ public class InsertAsyncTask extends AsyncTask<Event, Void, List<Event>> {
             myApiService = builder.build();
         }
         try {
-
             myApiService.insertEvent(myEvent[0]).execute();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         try {
+            Log.d("Return","trying to return");
             return myApiService.listEvents().execute().getItems();
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.d("Return","exception found");
+            return Collections.EMPTY_LIST;
         }
-        return null;
     }
-
-
-        @Override
-        protected void onPostExecute(List<Event> result) {
-            ((CookooMainApplication)((MainActivity) context).getApplication()).setGlobalEventList(result);
-        }
 }
 

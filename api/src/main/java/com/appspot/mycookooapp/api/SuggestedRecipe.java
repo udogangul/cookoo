@@ -20,12 +20,6 @@ public class SuggestedRecipe {
     private int missedIngredientCount;
     private int calories;
 
-    public SuggestedRecipe() {
-    }
-
-    public SuggestedRecipe(double id) {
-        this.id = id;
-    }
     public SuggestedRecipe(boolean vegetarian, boolean vegan, boolean glutenFree, boolean dairyFree, double id, String title, int readyInMinutes, String image, String imageType, int usedIngredientCount, int missedIngredientCount, int calories) {
         this.vegetarian = vegetarian;
         this.vegan = vegan;

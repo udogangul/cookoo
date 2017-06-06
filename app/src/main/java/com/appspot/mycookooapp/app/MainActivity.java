@@ -13,10 +13,6 @@ public class MainActivity extends AppCompatActivity {
         new RefreshAsyncTask(this).execute();
     }
 
-    public void onClickGetEvents(View v) {
-        new RefreshAsyncTask(this).execute();
-    }
-
     public void onClickNewEvent(View v) {
         Intent intent = new Intent(this, NewEventActivity.class);
         startActivity(intent);

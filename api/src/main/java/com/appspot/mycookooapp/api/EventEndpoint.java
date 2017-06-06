@@ -31,7 +31,6 @@ import java.util.logging.Logger;
 
 import javax.inject.Named;
 
-import static com.appspot.mycookooapp.api.OfyService.ofy;
 import static com.appspot.mycookooapp.api.OfyServiceEvent.ofyEvent;
 
 @Api(name = "eventEndpoint", version = "v1", namespace = @ApiNamespace(ownerDomain = "api.mycookooapp.appspot.com", ownerName = "api.mycookooapp.appspot.com", packagePath=""))
@@ -220,14 +219,7 @@ public class EventEndpoint {
     }
 
     //Private method to retrieve a <code>Quote</code> record
-    private User findUserRecord(Long id) {
-        return ofy().load().type(User.class).id(id).now();
-        //or return ofy().load().type(Quote.class).filter("id",id).first.now();
-    }
-
-    //Private method to retrieve a <code>Quote</code> record
     private Event findEventRecord(Long id) {
         return ofyEvent().load().type(Event.class).id(id).now();
-        //or return ofy().load().type(Quote.class).filter("id",id).first.now();
     }
 }

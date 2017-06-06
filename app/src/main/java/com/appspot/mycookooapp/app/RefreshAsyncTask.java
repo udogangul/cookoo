@@ -56,7 +56,7 @@ public class RefreshAsyncTask extends AsyncTask<Void, Void, List<Event>> {
 
         @Override
         protected void onPostExecute(List<Event> result) {
-            ((CookooMainApplication)((MainActivity) context).getApplication()).setGlobalEventList(result);
+            super.onPostExecute(result);
         }
 }
 
