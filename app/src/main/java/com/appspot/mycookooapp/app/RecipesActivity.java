@@ -118,5 +118,9 @@ public class RecipesActivity extends AppCompatActivity {
             }
         }
     }
+    @Override
+    protected void onStop(){
+    super.onStop();
+        ImageLoader.getInstance().destroy();
+    }
 }
-

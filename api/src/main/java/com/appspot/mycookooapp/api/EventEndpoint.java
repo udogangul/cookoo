@@ -14,6 +14,7 @@ import com.google.api.server.spi.response.NotFoundException;
 import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.api.datastore.QueryResultIterator;
 import com.google.gson.Gson;
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.cmd.Query;
 
 import org.apache.http.HttpResponse;
@@ -217,9 +218,20 @@ public class EventEndpoint {
         }
         ofyEvent().delete().entity(record).now();
     }
+    /**
+     * This deletes all existing <code>Event</code> objects.
+     */
+    @ApiMethod(name = "removeAllEvents")
+    public void removeAllEvents()  {
+
+        List<Key<Event>> records = ofyEvent().load().type(Event.class).keys().list();
+        ofyEvent().delete().keys(records).now();
+    }
 
     //Private method to retrieve a <code>Quote</code> record
     private Event findEventRecord(Long id) {
         return ofyEvent().load().type(Event.class).id(id).now();
     }
+
+
 }

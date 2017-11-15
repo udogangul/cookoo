@@ -1,6 +1,7 @@
 package com.appspot.mycookooapp.app;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -50,6 +51,17 @@ public class NewEventActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        //insertEvent.setOnClickListener(
+        //        new View.OnClickListener()
+        //        {
+        //            public void onClick(View view)
+        //            {
+        //
+        //            }
+        //        });
+    }
+    public void onClickInsertEvent(View v) {
         List<Event> myEventList = null;
         try {
             myEventList = new RefreshAsyncTask(this).execute().get();
@@ -59,24 +71,18 @@ public class NewEventActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         final List<Event> finalMyEventList = myEventList;
-        insertEvent.setOnClickListener(
-                new View.OnClickListener()
-                {
-                    public void onClick(View view)
-                    {
-                        if (finalMyEventList==null) {
-                            newEvent.setId((long)1);
-                        }
-                        else {
-                            newEvent.setId(finalMyEventList.get(finalMyEventList.size()-1).getId() + (long) 1);
-                        }
-                    newEvent.setTitle(eventTitleText.getText().toString());
-                    newEvent.setTime(eventDateText.getText().toString());
-                    newEvent.setIngredients(eventIngredientsText.getText().toString());
-                    new InsertAsyncTask(context).execute(newEvent);
-                    insertEvent.setText("Event added");
-                    }
-                });
+        if (finalMyEventList==null) {
+            newEvent.setId((long)1);
+        }
+        else {
+            newEvent.setId(finalMyEventList.get(finalMyEventList.size()-1).getId() + (long) 1);
+        }
+        newEvent.setTitle(eventTitleText.getText().toString());
+        newEvent.setTime(eventDateText.getText().toString());
+        newEvent.setIngredients(eventIngredientsText.getText().toString());
+        new InsertAsyncTask(context).execute(newEvent);
+        insertEvent.setText("Event added");
+        Intent intent = new Intent(this, EventsActivity.class);
+        startActivity(intent);
     }
-
     }
